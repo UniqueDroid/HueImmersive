@@ -328,15 +328,15 @@ public class OptionInterface
 		{
 			JPanel panel_Light = (JPanel) panel_Lights.getComponent(light.id - 1);
 			
-			JCheckBox checkbox_Light = (JCheckBox) panel_Light.getComponent(0);
-			Settings.Light.setActive(light.id, checkbox_Light.isSelected());
+			JCheckBox checkbox_Active = (JCheckBox) panel_Light.getComponent(0);
+			Settings.Light.setActive(light.id, checkbox_Active.isSelected());
 			
-			JList list_Light = (JList) panel_Light.getComponent(2);
-			Settings.Light.setAlgorithm(light.id, list_Light.getSelectedIndex());
+			JList list_Algorithms = (JList) panel_Light.getComponent(2);
+			Settings.Light.setAlgorithm(light.id, list_Algorithms.getSelectedIndex());
 			
 			JPanel panel_Brightness = (JPanel) panel_Light.getComponent(3);
 			JSlider slider_Brightness = (JSlider) panel_Brightness.getComponent(0);
-			Settings.Light.setAlgorithm(light.id, slider_Brightness.getValue());
+			Settings.Light.setBrightness(light.id, slider_Brightness.getValue());
 		}
 	}
 }
