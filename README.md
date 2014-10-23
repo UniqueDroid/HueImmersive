@@ -1,3 +1,4 @@
+## Description
 HueImmersive is an application that tries to generate the ambient light from your screen with the Philips hue lights. It should create a similar atmosphere, as in a picture, movie or game that your screen displays.
 
 If you’ve found a bug create a [issue](https://github.com/Blodjer/HueImmersive/issues/new) or contact me via [Email](mailto: blodjer@live.de) or [Reddit](http://redd.it/2e3vq9). Also feel free to send me suggestions and feedback.
@@ -25,6 +26,7 @@ You can also set the brightness and aspect ratio for the screen capture. Advance
 ### Requirements (Developer)
 *will be added soon*
 
+<br>
 ## How It Works
 The application takes several shots in the second of your screen. To get a good result the program pixelate each screenshot into a color grid.
 <br> The color grid looks similar to this:
