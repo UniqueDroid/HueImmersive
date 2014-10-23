@@ -55,7 +55,7 @@ public class Debug
 		}
 	}
 	
-	public static void info(String header, String ... messages) // log/debug a information message
+	public static void info(String header, Object ... messages) // log/debug a information message
 	{
 		// format message for debug output
 		if (debugging == true)
