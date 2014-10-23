@@ -41,7 +41,7 @@ public class AboutInterface
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setTitle("about");
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 482, 302);
+		frame.setBounds(100, 100, 504, 343);
 		frame.getContentPane().setLayout(null);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -63,24 +63,25 @@ public class AboutInterface
 				frame.dispose();
 			}
 		});
-		button_Close.setBounds(365, 238, 101, 24);
+		button_Close.setBounds(381, 281, 107, 24);
 		frame.getContentPane().add(button_Close);
 		
-		JLabel label_Header = new JLabel("Hue Immersive");
-		label_Header.setVerticalAlignment(SwingConstants.TOP);
-		label_Header.setHorizontalAlignment(SwingConstants.CENTER);
-		label_Header.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		label_Header.setBounds(10, 10, 456, 32);
-		frame.getContentPane().add(label_Header);
+		JLabel lblHueimmersive = new JLabel("HueImmersive");
+		lblHueimmersive.setVerticalAlignment(SwingConstants.TOP);
+		lblHueimmersive.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHueimmersive.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblHueimmersive.setBounds(10, 9, 478, 32);
+		frame.getContentPane().add(lblHueimmersive);
 		
 		JLabel label_Version = new JLabel("v" + String.valueOf(Main.version));
+		label_Version.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_Version.setHorizontalAlignment(SwingConstants.CENTER);
-		label_Version.setBounds(10, 42, 456, 14);
+		label_Version.setBounds(10, 44, 478, 14);
 		frame.getContentPane().add(label_Version);
 		
 		JScrollPane scrollpane_About = new JScrollPane();
 		scrollpane_About.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		scrollpane_About.setBounds(10, 67, 456, 163);
+		scrollpane_About.setBounds(10, 67, 478, 203);
 		frame.getContentPane().add(scrollpane_About);
 		
 		JTextPane txtpnHueImmersiveIs = new JTextPane();
@@ -111,7 +112,7 @@ public class AboutInterface
 		txtpnHueImmersiveIs.setBackground(new Color(204, 204, 204));
 		txtpnHueImmersiveIs.setEditable(false);
 		txtpnHueImmersiveIs.setContentType("text/html");
-		txtpnHueImmersiveIs.setText("<font style=\"font-family: Tahoma; font-size:12\">\r\n\r\nHue Immersive is a program written and developed by Jannik Szwaczka (Blodjer).<br>\r\nIf you need support or have suggestions/feedback please send me an email or write it in the reddit comments. You can also create an issue on GitHub.<br>\r\n<p>\r\nGitHub: <a href='https://github.com/Blodjer/HueImmersive'>https://github.com/Blodjer/HueImmersive</a><br>\r\nTwitter: <a href='https://twitter.com/Blodjer'>https://twitter.com/Blodjer</a><br>\r\nEmail: <a href='blodjer@live.de'>blodjer@live.de</a><br>\r\nReddit: <a href='http://redd.it/2e3vq9'>http://redd.it/2e3vq9</a>\r\n</p>\r\n<p>\r\n<b>\r\nIf you you want to support me: <a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BVVY8L9TTPQFJ'>Donate</a>\r\n</b>\r\n</p>\r\n\r\n</font>");
+		txtpnHueImmersiveIs.setText("<font style=\"font-family: Tahoma; font-size:13\">\r\n\r\nHue Immersive is a program written and developed by Jannik Szwaczka (Blodjer).<br>\r\nIf you need support or have suggestions/feedback please send me an email or write it in the reddit comments. You can also create an issue on GitHub.<br>\r\n<p>\r\nGitHub: <a href='https://github.com/Blodjer/HueImmersive'>https://github.com/Blodjer/HueImmersive</a><br>\r\nReddit: <a href='http://redd.it/2e3vq9'>http://redd.it/2e3vq9</a><br>\r\nEmail: <a href='blodjer@live.de'>blodjer@live.de</a><br>\r\n</p><br>\r\n\r\n<b>\r\nIf you you want to support me with a donation: <a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BVVY8L9TTPQFJ'>Thank You!</a>\r\n</b>\r\n\r\n<p align=\"center\">\r\nCopyright (c) 2014 Jannik Szwaczka <br>\r\n<a href='https://github.com/Blodjer/HueImmersive/blob/master/LICENSE'>License</a>\r\n</p>\r\n\r\n</font>");
 
 		frame.setVisible(true);
 	}
