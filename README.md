@@ -1,7 +1,7 @@
 ## Description
 HueImmersive is an application that tries to generate the ambient light from your screen with the Philips hue lights. It should create a similar atmosphere, as in a picture, movie or game that your screen displays.
 
-If you’ve found a bug create a [issue](https://github.com/Blodjer/HueImmersive/issues/new) or contact me via [Email](mailto: blodjer@live.de) or [Reddit](http://redd.it/2e3vq9). Also feel free to send me suggestions and feedback.
+If you’ve found a bug or have a problem create an [issue](https://github.com/Blodjer/HueImmersive/issues/new) or contact me via [Email](mailto: blodjer@live.de) or [Reddit](http://redd.it/2e3vq9). Also feel free to send me suggestions and feedback.
 You can also download or fork this project to make it even better. Any help is welcome!
  
 If you you want to support me with a donation: [Thank you!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BVVY8L9TTPQFJ)
@@ -42,4 +42,4 @@ In the further process the program will analyze these chunks and extract specifi
 * Reddit discussion: http://redd.it/2e3vq9
 
 -
-###### *<sub>sorry for the bad English</sub>*
+###### *<sub>sorry for the possibly bad English</sub>*
