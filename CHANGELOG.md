@@ -1,3 +1,12 @@
+## v0.4.3 (24 Oct 2014) ##
+ - move the whole project to GitHub
+ - latest version and changelog requested now from GitHub
+ - change changelog formation
+ - change 'about' text
+ - add License
+ - whole lot of class, variable, method renamings
+ - clean up code
+
 ## v0.4.2 (18 Sep 2014) ##
  - add version notes to experimental features
  - add command-line arguments: debug, log, reset
