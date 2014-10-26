@@ -11,7 +11,6 @@ import com.google.gson.*;
 public class HBridge
 {
 	public static String name;
-	public static String id;
 	public static String internalipaddress = Settings.Bridge.getInternalipaddress();
 	public static String macaddress;
 
@@ -44,7 +43,8 @@ public class HBridge
 			macaddress = response.get("mac").getAsString();
 			
 			Debug.info(null, "fast connect successfull");
-			Debug.info("bridge infos", "name: " + name, "internalipaddress: " + internalipaddress, "macaddress: " + "hidden");
+
+			debug();
 			
 			getLights();
 			Main.ui.loadMainInterface();
@@ -78,11 +78,8 @@ public class HBridge
 						timer.purge();
 						
 						name = response.get("name").getAsString();
-						id = response.get("id").getAsString();
 						internalipaddress = response.get("internalipaddress").getAsString();
 						macaddress = response.get("macaddress").getAsString();
-
-						Debug.info("bridge infos", "id: " + "hidden", "name: " + name, "internalipaddress: " + internalipaddress, "macaddress: " + "hidden");
 						
 						Settings.Bridge.setInternalipaddress(internalipaddress);
 						
@@ -114,20 +111,37 @@ public class HBridge
 		};
 		timer.scheduleAtFixedRate(addUserLoop, 0, 1500);
 	}
-	
+
 	private static void login() throws Exception // try to login
 	{
 		JsonObject response = HRequest.GET("http://" + internalipaddress + "/api/" + username);
 		if (HRequest.responseCheck(response) == "data")
 		{
 			Debug.info(null, "login successfull");
+			
+			debug();
+			
 			getLights();
+			
 			Main.ui.setConnectState(2);
 		}
 		else if (HRequest.responseCheck(response) == "error")
 		{
 			createUser();
 		}
+	}
+	
+	public static void debug() throws Exception
+	{
+		JsonObject response = HRequest.GET("http://" + internalipaddress + "/api/" + username + "/config/");
+		
+		Debug.info("bridge infos", 
+				"name: " + response.get("name").getAsString(), 
+				"ipaddress: " + response.get("ipaddress").getAsString(), 
+				"macaddress: " + "secret",
+				"timezone: " + response.get("timezone").getAsString(),
+				"swversion: " + response.get("swversion").getAsString(),
+				"apiversion: " + response.get("apiversion").getAsString());
 	}
 	
 	private static void getLights() throws Exception
