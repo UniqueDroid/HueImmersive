@@ -45,19 +45,32 @@ public class HLight
 	
 	public void storeLightColor() throws Exception
 	{
-		JsonObject response = HRequest.GET("http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id);
+		try // SOLIDUS HOTFIX
+		{
+			JsonObject response = HRequest.GET("http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id);
 
-		storedLightColor[0] = response.get("state").getAsJsonObject().get("hue").getAsInt();
-		storedLightColor[1] = response.get("state").getAsJsonObject().get("sat").getAsInt();
-		storedLightColor[2] = response.get("state").getAsJsonObject().get("bri").getAsInt();
+			storedLightColor[0] = response.get("state").getAsJsonObject().get("hue").getAsInt();
+			storedLightColor[1] = response.get("state").getAsJsonObject().get("sat").getAsInt();
+			storedLightColor[2] = response.get("state").getAsJsonObject().get("bri").getAsInt();
+		} 
+		catch (Exception e) 
+		{
+			Debug.exception(e);
+			storedLightColor[0] = -1;
+			storedLightColor[1] = -1;
+			storedLightColor[2] = -1;
+		}
 	}
 	
 	public void restoreLightColor() throws Exception
 	{
-		String APIurl = "http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id + "/state/";
-		String data = "{\"hue\":" + storedLightColor[0] + ", \"sat\":" + storedLightColor[1] + ", \"bri\":" + storedLightColor[2] + ", \"transitiontime\":4}";
-		
-		HRequest.PUT(APIurl, data);
+		if (this.storedLightColor[0] == -1 || this.storedLightColor[1] == -1 || this.storedLightColor[2] == -1) // SOLIDUS HOTFIX
+		{
+			String APIurl = "http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id + "/state/";
+			String data = "{\"hue\":" + storedLightColor[0] + ", \"sat\":" + storedLightColor[1] + ", \"bri\":" + storedLightColor[2] + ", \"transitiontime\":4}";
+			
+			HRequest.PUT(APIurl, data);
+		}
 	}
 	
 	public void setActive(boolean b)

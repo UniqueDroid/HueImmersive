@@ -1,3 +1,6 @@
+## v0.4.3.1 (26 Oct 2014) ##
+ - hotfix 'restore color' function with unsupported lights
+
 ## v0.4.3 (24 Oct 2014) ##
  - move the whole project to GitHub
  - latest version and changelog requested now from GitHub
