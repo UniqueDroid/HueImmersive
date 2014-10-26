@@ -7,7 +7,6 @@ public class HLight
 {
 	public final int id;
 	public final String name;
-	private boolean active;
 	private int[] storedLightColor = new int[3];
 	
 	public HLight(int LightID) throws Exception
@@ -45,41 +44,18 @@ public class HLight
 	
 	public void storeLightColor() throws Exception
 	{
-		try // SOLIDUS HOTFIX
-		{
-			JsonObject response = HRequest.GET("http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id);
+		JsonObject response = HRequest.GET("http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id);
 
-			storedLightColor[0] = response.get("state").getAsJsonObject().get("hue").getAsInt();
-			storedLightColor[1] = response.get("state").getAsJsonObject().get("sat").getAsInt();
-			storedLightColor[2] = response.get("state").getAsJsonObject().get("bri").getAsInt();
-		} 
-		catch (Exception e) 
-		{
-			Debug.exception(e);
-			storedLightColor[0] = -1;
-			storedLightColor[1] = -1;
-			storedLightColor[2] = -1;
-		}
+		storedLightColor[0] = response.get("state").getAsJsonObject().get("hue").getAsInt();
+		storedLightColor[1] = response.get("state").getAsJsonObject().get("sat").getAsInt();
+		storedLightColor[2] = response.get("state").getAsJsonObject().get("bri").getAsInt();
 	}
 	
 	public void restoreLightColor() throws Exception
 	{
-		if (this.storedLightColor[0] == -1 || this.storedLightColor[1] == -1 || this.storedLightColor[2] == -1) // SOLIDUS HOTFIX
-		{
-			String APIurl = "http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id + "/state/";
-			String data = "{\"hue\":" + storedLightColor[0] + ", \"sat\":" + storedLightColor[1] + ", \"bri\":" + storedLightColor[2] + ", \"transitiontime\":4}";
-			
-			HRequest.PUT(APIurl, data);
-		}
-	}
-	
-	public void setActive(boolean b)
-	{
-		active = b;
-	}
-	
-	public boolean isActive()
-	{
-		return active;
+		String APIurl = "http://" + HBridge.internalipaddress + "/api/" + HBridge.username + "/lights/" + id + "/state/";
+		String data = "{\"hue\":" + storedLightColor[0] + ", \"sat\":" + storedLightColor[1] + ", \"bri\":" + storedLightColor[2] + ", \"transitiontime\":4}";
+		
+		HRequest.PUT(APIurl, data);
 	}
 }

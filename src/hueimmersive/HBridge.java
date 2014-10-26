@@ -1,7 +1,6 @@
 package hueimmersive;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +16,7 @@ public class HBridge
 	public static final String username = "hueimmersiveuser";
 	public static final String devicetype = "hueimmersive";
 	
-	public static List<HLight> lights = new ArrayList<HLight>();
+	public  static ArrayList<HLight> lights = new ArrayList<HLight>();
 	
 	public static void setup() throws Exception
 	{
@@ -29,6 +28,18 @@ public class HBridge
 		{
 			newConnect();
 		}
+	}
+	
+	public static HLight getLight(int lightID)
+	{
+		for (HLight light : lights)
+		{
+			if(light.id == lightID)
+			{
+				return light;
+			}
+		}
+		return null;
 	}
 	
 	private static void fastConnect() throws Exception // try to connect to the saved ip
@@ -153,7 +164,11 @@ public class HBridge
 		{
 			if (response.has(String.valueOf(i)))
 			{
-				lights.add(new HLight(i));
+				JsonObject state = response.getAsJsonObject(String.valueOf(i)).getAsJsonObject("state");
+				if (state.has("on") && state.has("hue") && state.has("sat") && state.has("bri"))
+				{
+					lights.add(new HLight(i));
+				}
 			}
 		}
 
