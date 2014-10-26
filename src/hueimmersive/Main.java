@@ -33,10 +33,17 @@ public class Main
 			}
 		}
 		
-		Debug.info("program parameters", "version: " + version, "build: " + build, "OS: " + System.getProperty("os.name"));
+		Debug.info("program parameters",
+				"version: " + version,
+				"build: " + build,
+				"os: " + System.getProperty("os.name"),
+				"java version: " + System.getProperty("java.version"));
+		
 		Debug.info(null, "hue immersive started");
 		
 		checkForUpdate();
+		
+		Settings.debug();
 		
 		ui = new UserInterface();
 		hueControl = new Control();

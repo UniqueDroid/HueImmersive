@@ -1,11 +1,14 @@
 package hueimmersive;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.prefs.Preferences;
 
 
 public class Settings
 {
 	private static Preferences prefs = Preferences.userRoot();
+	
 	public static SettingsLight Light = new SettingsLight();
 	public static SettingsBridge Bridge = new SettingsBridge();
 	
@@ -26,6 +29,33 @@ public class Settings
 		catch(Exception e)
 		{
 			Debug.exception(e);
+		}
+	}
+	
+	public static void debug() throws Exception
+	{
+		String[] keys;
+		ArrayList<String> settings;
+		
+		keys = prefs.keys();
+		Arrays.sort(keys);
+		settings = new ArrayList<String>();
+		for (String s : keys)
+		{
+			settings.add(s + " = " + prefs.get(s, null));
+		}
+		Debug.info("settings general", settings);
+		
+		for (String node : prefs.childrenNames())
+		{			
+			keys = prefs.node(node).keys();
+			Arrays.sort(keys);
+			settings = new ArrayList<String>();
+			for (String s : keys)
+			{
+				settings.add(s + " = " + prefs.node(node).get(s, null));
+			}
+			Debug.info("settings " + node, settings);
 		}
 	}
 	
@@ -81,7 +111,7 @@ public class Settings
 
 class SettingsBridge // bridge settings
 {
-	private Preferences prefs = Preferences.userRoot().node("/hueimmersive/bridge");
+	public Preferences prefs = Preferences.userRoot().node("/hueimmersive/bridge");
 	
 	public void setInternalipaddress(String internalipaddress)
 	{
@@ -96,7 +126,7 @@ class SettingsBridge // bridge settings
 
 class SettingsLight // light settings
 {
-	private Preferences prefs = Preferences.userRoot().node("/hueimmersive/lights");
+	public Preferences prefs = Preferences.userRoot().node("/hueimmersive/lights");
 	
 	private int nexAlg = 0;
 	private int maxAlg = ImmersiveProcess.algorithms;
