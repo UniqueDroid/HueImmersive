@@ -30,17 +30,17 @@ public class Control
 		// turn light off automatically if the brightness is very low
 		if (Settings.getBoolean("autoswitch"))
 		{
-			if (colorHSB1[2] > autoOffBri + 0.1 && HBridge.lights.get(LightID - 1).isOn() == false)
+			if (colorHSB1[2] > autoOffBri + 0.1 && HBridge.getLight(LightID).isOn() == false)
 			{
 				data = "{\"on\":true, \"xy\":[" + xy[0] + ", " + xy[1] + "], \"bri\":" + Math.round(colorHSB2[2] * 255) + ", \"transitiontime\":4}";
 			}
-			else if (colorHSB1[2] <= 0.0627451f && HBridge.lights.get(LightID - 1).isOn() == true)
+			else if (colorHSB1[2] <= 0.0627451f && HBridge.getLight(LightID).isOn() == true)
 			{
 				data = "{\"on\":false, \"transitiontime\":3}";
 				autoOffBri = colorHSB1[2];
 			}
 		}
-		else if (Settings.getBoolean("autoswitch") == false && HBridge.lights.get(LightID - 1).isOn() == false)
+		else if (Settings.getBoolean("autoswitch") == false && HBridge.getLight(LightID).isOn() == false)
 		{
 			data = "{\"on\":true, \"xy\":[" + xy[0] + ", " + xy[1] + "], \"bri\":" + Math.round(colorHSB2[2] * 255) + ", \"transitiontime\":2}";
 		}
@@ -106,7 +106,10 @@ public class Control
 	{
 		for(HLight light : HBridge.lights)
 		{
-			light.turnOn();
+			if (Settings.Light.getActive(light.id))
+			{
+				light.turnOn();
+			}
 		}
 	}
 
@@ -114,7 +117,10 @@ public class Control
 	{
 		for(HLight light : HBridge.lights)
 		{
-			light.turnOff();
+			if (Settings.Light.getActive(light.id))
+			{
+				light.turnOff();
+			}
 		}
 	}
 
