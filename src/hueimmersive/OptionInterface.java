@@ -66,6 +66,7 @@ public class OptionInterface
 	private void initialize()
 	{
 		frame = new JFrame();
+		frame.setMinimumSize(new Dimension(460, 420));
 		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -77,7 +78,7 @@ public class OptionInterface
 			}
 		});
 		frame.setTitle("options");
-		frame.setBounds(100, 100, 429, 420);
+		frame.setBounds(100, 100, 460, 420);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		frame.setLocation(Settings.getInteger("oi_x"), Settings.getInteger("oi_y"));
@@ -180,19 +181,19 @@ public class OptionInterface
 			{
 				rows = 6;
 			}
-			panel_Lights.setLayout(new GridLayout(rows, 1, 5, 4));
+			panel_Lights.setLayout(new GridLayout(rows, 1, 5, 7));
 	
 			JLabel label_ActiveNameColor = new JLabel("   active         name                    \r\n color algorithm                   brightness\r\n");
 			scrollpane.setColumnHeaderView(label_ActiveNameColor);
 			
 			// create the list
 			for (final HLight light : HBridge.lights)
-			{		
+			{
 				final JPanel panel_options = new JPanel();
 				panel_Lights.add(panel_options, HBridge.lights.indexOf(light));
 				
 				JLabel label_Name = new JLabel(light.name);
-				label_Name.setPreferredSize(new Dimension(80, 15));
+				label_Name.setPreferredSize(new Dimension(110, 15));
 				
 				final JList list_Algorithms = new JList();
 				list_Algorithms.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -304,10 +305,10 @@ public class OptionInterface
 				panel_options.add(label_Name,1);
 				panel_options.add(list_Algorithms,2);
 				panel_options.add(panel_Brightness,3);
-				
-				frame.pack();
-				frame.setVisible(true);
 			}
+			
+		frame.pack();
+		frame.setVisible(true);
 	}
 	
 	private void getOptions() // get saved options and setup window elements
