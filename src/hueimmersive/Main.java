@@ -10,8 +10,8 @@ public class Main
 	public static UserInterface ui;
 	public static Control hueControl;
 	
-	public static final String version = "0.4.3.1";
-	public static final int build = 15;
+	public static final String version = "0.4.4";
+	public static final int build = 16;
 	
 	public static boolean updateAvailable;
 	
@@ -33,10 +33,17 @@ public class Main
 			}
 		}
 		
-		Debug.info("program parameters", "version: " + version, "build: " + build, "OS: " + System.getProperty("os.name"));
+		Debug.info("program parameters",
+				"version: " + version,
+				"build: " + build,
+				"os: " + System.getProperty("os.name"),
+				"java version: " + System.getProperty("java.version"));
+		
 		Debug.info(null, "hue immersive started");
 		
 		checkForUpdate();
+		
+		Settings.debug();
 		
 		ui = new UserInterface();
 		hueControl = new Control();

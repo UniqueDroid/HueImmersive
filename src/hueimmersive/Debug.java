@@ -2,6 +2,7 @@ package hueimmersive;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class Debug
 			logpath = logpath.replace("\\", "/");
 	    	
 			logger = Logger.getLogger("global");		
-			handler = new FileHandler(logpath + "/hue.log");
+			handler = new FileHandler(logpath + "/HueImmersive.log");
 			
 	        logger.addHandler(handler);
 	        logger.setUseParentHandlers(false);
@@ -55,25 +56,45 @@ public class Debug
 		}
 	}
 	
-	public static void info(String header, Object ... messages) // log/debug a information message
+	public static void info(String header, Object ... msg) // log/debug a information message
 	{
+		ArrayList<Object> list = new ArrayList<Object>();
+		for (Object object : msg)
+		{
+			if (object.getClass() == ArrayList.class)
+			{
+				ArrayList<Object> subList = (ArrayList<Object>) object;
+				for (Object subObject : subList)
+				{
+					list.add(subObject);
+				}
+			}
+			else
+			{
+				list.add(object);
+			}
+		}
+		msg = list.toArray();
+		
 		// format message for debug output
 		if (debugging == true)
 		{
 			String dText = "\n";
+			
 			if (header != null && header != "")
 			{
 				dText += "- - - - - " + header.toUpperCase() + " - - - - -\n";
 			}
-			for (int i = 0; i < messages.length; i++)
+			
+			for (int i = 0; i < msg.length; i++)
 			{
-				if (i != messages.length - 1)
+				if (i != msg.length - 1)
 				{
-					dText += messages[i] + "\n";
+					dText += msg[i] + "\n";
 				}
 				else
 				{
-					dText += messages[i];
+					dText += msg[i];
 					if (header != null && header != "")
 					{
 						dText += "\n- - - - -";
@@ -91,15 +112,16 @@ public class Debug
 			{
 				lText += header.toUpperCase();
 			}
-			for (int i = 0; i < messages.length; i++)
+			
+			for (int i = 0; i < msg.length; i++)
 			{
-				if (i != messages.length - 1)
+				if (i != msg.length - 1)
 				{
-					lText += "\n # " + messages[i];
+					lText += "\n >	" + msg[i];
 				}
 				else
 				{
-					lText += "\n # " + messages[i] + "\n";
+					lText += "\n >	" + msg[i] + "\n";
 				}
 			}
 			logger.log(Level.INFO, lText);

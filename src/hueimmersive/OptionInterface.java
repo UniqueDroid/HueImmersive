@@ -66,6 +66,7 @@ public class OptionInterface
 	private void initialize()
 	{
 		frame = new JFrame();
+		frame.setMinimumSize(new Dimension(460, 420));
 		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -77,7 +78,7 @@ public class OptionInterface
 			}
 		});
 		frame.setTitle("options");
-		frame.setBounds(100, 100, 408, 334);
+		frame.setBounds(100, 100, 460, 420);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		frame.setLocation(Settings.getInteger("oi_x"), Settings.getInteger("oi_y"));
@@ -93,9 +94,9 @@ public class OptionInterface
 				FormFactory.LINE_GAP_ROWSPEC,
 				RowSpec.decode("16dlu"),
 				RowSpec.decode("10dlu"),
-				RowSpec.decode("16dlu:grow"),
+				RowSpec.decode("16dlu"),
 				RowSpec.decode("10dlu"),
-				RowSpec.decode("105dlu"),
+				RowSpec.decode("155dlu:grow"),
 				FormFactory.LINE_GAP_ROWSPEC,
 				RowSpec.decode("bottom:16dlu"),
 				FormFactory.RELATED_GAP_ROWSPEC,}));
@@ -176,23 +177,23 @@ public class OptionInterface
 			panel_Lights = new JPanel();
 			scrollpane.setViewportView(panel_Lights);
 			int rows = HBridge.countLights();
-			if (rows < 4)
+			if (rows < 6)
 			{
-				rows = 4;
+				rows = 6;
 			}
-			panel_Lights.setLayout(new GridLayout(rows, 1, 5, 4));
+			panel_Lights.setLayout(new GridLayout(rows, 1, 5, 7));
 	
-			JLabel label_Listheader = new JLabel("   active          name                    \r\n color algorithm                   brightness\r\n");
-			scrollpane.setColumnHeaderView(label_Listheader);
+			JLabel label_ActiveNameColor = new JLabel("   active         name                    \r\n color algorithm                   brightness\r\n");
+			scrollpane.setColumnHeaderView(label_ActiveNameColor);
 			
 			// create the list
 			for (final HLight light : HBridge.lights)
 			{
 				final JPanel panel_options = new JPanel();
-				panel_Lights.add(panel_options, light.id - 1);
+				panel_Lights.add(panel_options, HBridge.lights.indexOf(light));
 				
 				JLabel label_Name = new JLabel(light.name);
-				label_Name.setPreferredSize(new Dimension(80, 15));
+				label_Name.setPreferredSize(new Dimension(110, 15));
 				
 				final JList list_Algorithms = new JList();
 				list_Algorithms.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -304,10 +305,10 @@ public class OptionInterface
 				panel_options.add(label_Name,1);
 				panel_options.add(list_Algorithms,2);
 				panel_options.add(panel_Brightness,3);
-				
-				frame.pack();
-				frame.setVisible(true);
 			}
+			
+		frame.pack();
+		frame.setVisible(true);
 	}
 	
 	private void getOptions() // get saved options and setup window elements
@@ -326,7 +327,7 @@ public class OptionInterface
 		
 		for (HLight light : HBridge.lights)
 		{
-			JPanel panel_Light = (JPanel) panel_Lights.getComponent(light.id - 1);
+			JPanel panel_Light = (JPanel) panel_Lights.getComponent(HBridge.lights.indexOf(light));
 			
 			JCheckBox checkbox_Active = (JCheckBox) panel_Light.getComponent(0);
 			Settings.Light.setActive(light.id, checkbox_Active.isSelected());
@@ -337,6 +338,15 @@ public class OptionInterface
 			JPanel panel_Brightness = (JPanel) panel_Light.getComponent(3);
 			JSlider slider_Brightness = (JSlider) panel_Brightness.getComponent(0);
 			Settings.Light.setBrightness(light.id, slider_Brightness.getValue());
+		}
+		
+		try 
+		{
+			Main.ui.setupOnOffButton();
+		} 
+		catch (Exception e) 
+		{
+			Debug.exception(e);
 		}
 	}
 }

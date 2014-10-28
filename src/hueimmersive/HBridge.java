@@ -1,7 +1,6 @@
 package hueimmersive;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,14 +10,13 @@ import com.google.gson.*;
 public class HBridge
 {
 	public static String name;
-	public static String id;
 	public static String internalipaddress = Settings.Bridge.getInternalipaddress();
 	public static String macaddress;
 
 	public static final String username = "hueimmersiveuser";
 	public static final String devicetype = "hueimmersive";
 	
-	public static List<HLight> lights = new ArrayList<HLight>();
+	public  static ArrayList<HLight> lights = new ArrayList<HLight>();
 	
 	public static void setup() throws Exception
 	{
@@ -30,6 +28,18 @@ public class HBridge
 		{
 			newConnect();
 		}
+	}
+	
+	public static HLight getLight(int lightID)
+	{
+		for (HLight light : lights)
+		{
+			if(light.id == lightID)
+			{
+				return light;
+			}
+		}
+		return null;
 	}
 	
 	private static void fastConnect() throws Exception // try to connect to the saved ip
@@ -44,7 +54,8 @@ public class HBridge
 			macaddress = response.get("mac").getAsString();
 			
 			Debug.info(null, "fast connect successfull");
-			Debug.info("bridge infos", "name: " + name, "internalipaddress: " + internalipaddress, "macaddress: " + "hidden");
+
+			debug();
 			
 			getLights();
 			Main.ui.loadMainInterface();
@@ -78,11 +89,8 @@ public class HBridge
 						timer.purge();
 						
 						name = response.get("name").getAsString();
-						id = response.get("id").getAsString();
 						internalipaddress = response.get("internalipaddress").getAsString();
 						macaddress = response.get("macaddress").getAsString();
-
-						Debug.info("bridge infos", "id: " + "hidden", "name: " + name, "internalipaddress: " + internalipaddress, "macaddress: " + "hidden");
 						
 						Settings.Bridge.setInternalipaddress(internalipaddress);
 						
@@ -114,20 +122,37 @@ public class HBridge
 		};
 		timer.scheduleAtFixedRate(addUserLoop, 0, 1500);
 	}
-	
+
 	private static void login() throws Exception // try to login
 	{
 		JsonObject response = HRequest.GET("http://" + internalipaddress + "/api/" + username);
 		if (HRequest.responseCheck(response) == "data")
 		{
 			Debug.info(null, "login successfull");
+			
+			debug();
+			
 			getLights();
+			
 			Main.ui.setConnectState(2);
 		}
 		else if (HRequest.responseCheck(response) == "error")
 		{
 			createUser();
 		}
+	}
+	
+	public static void debug() throws Exception
+	{
+		JsonObject response = HRequest.GET("http://" + internalipaddress + "/api/" + username + "/config/");
+		
+		Debug.info("bridge infos", 
+				"name: " + response.get("name").getAsString(), 
+				"ipaddress: " + response.get("ipaddress").getAsString(), 
+				"macaddress: " + "secret",
+				"timezone: " + response.get("timezone").getAsString(),
+				"swversion: " + response.get("swversion").getAsString(),
+				"apiversion: " + response.get("apiversion").getAsString());
 	}
 	
 	private static void getLights() throws Exception
@@ -139,7 +164,11 @@ public class HBridge
 		{
 			if (response.has(String.valueOf(i)))
 			{
-				lights.add(new HLight(i));
+				JsonObject state = response.getAsJsonObject(String.valueOf(i)).getAsJsonObject("state");
+				if (state.has("on") && state.has("hue") && state.has("sat") && state.has("bri"))
+				{
+					lights.add(new HLight(i));
+				}
 			}
 		}
 
