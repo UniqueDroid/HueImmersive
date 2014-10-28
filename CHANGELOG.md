@@ -1,3 +1,11 @@
+## v0.4.4 (26 Oct 2014) ##
+ - program affects only 'Extended color lights'
+ - add more / changed debug informations
+ - on/off button affects only activated lights
+ - fixed some issues with changed light id's
+ - fixed option interface crash if no lights have been detected
+ - some changes to the option interface
+
 ## v0.4.3.1 (26 Oct 2014) ##
  - hotfix 'restore color' function with unsupported lights
 
