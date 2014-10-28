@@ -33,7 +33,7 @@ public class Debug
 			logpath = logpath.replace("\\", "/");
 	    	
 			logger = Logger.getLogger("global");		
-			handler = new FileHandler(logpath + "/hue.log");
+			handler = new FileHandler(logpath + "/HueImmersive.log");
 			
 	        logger.addHandler(handler);
 	        logger.setUseParentHandlers(false);
@@ -117,11 +117,11 @@ public class Debug
 			{
 				if (i != msg.length - 1)
 				{
-					lText += "\n # " + msg[i];
+					lText += "\n >	" + msg[i];
 				}
 				else
 				{
-					lText += "\n # " + msg[i] + "\n";
+					lText += "\n >	" + msg[i] + "\n";
 				}
 			}
 			logger.log(Level.INFO, lText);
