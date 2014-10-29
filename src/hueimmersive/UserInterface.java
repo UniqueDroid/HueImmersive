@@ -602,11 +602,11 @@ public class UserInterface
 		
 		for(HLight light : HBridge.lights)
 		{
-			if (light.isOn() && Settings.Light.getActive(light.id))
+			if (light.isOn() && Settings.Light.getActive(light.uniqueid))
 			{
 				lightOn = true;
 			}
-			else if (!light.isOn() && Settings.Light.getActive(light.id))
+			else if (!light.isOn() && Settings.Light.getActive(light.uniqueid))
 			{
 				lightOff = true;
 			}

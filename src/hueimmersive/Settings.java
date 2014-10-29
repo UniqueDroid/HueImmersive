@@ -36,7 +36,6 @@ public class Settings
 	{
 		String[] keys;
 		ArrayList<String> settings;
-		
 		keys = prefs.keys();
 		Arrays.sort(keys);
 		settings = new ArrayList<String>();
@@ -45,18 +44,6 @@ public class Settings
 			settings.add(s + " = " + prefs.get(s, null));
 		}
 		Debug.info("settings general", settings);
-		
-		for (String node : prefs.childrenNames())
-		{			
-			keys = prefs.node(node).keys();
-			Arrays.sort(keys);
-			settings = new ArrayList<String>();
-			for (String s : keys)
-			{
-				settings.add(s + " = " + prefs.node(node).get(s, null));
-			}
-			Debug.info("settings " + node, settings);
-		}
 	}
 	
 	public static void setDefaultSettings()
@@ -111,7 +98,19 @@ public class Settings
 
 class SettingsBridge // bridge settings
 {
-	public Preferences prefs = Preferences.userRoot().node("/hueimmersive/bridge");
+	private Preferences prefs = Preferences.userRoot().node("/hueimmersive/bridge");
+	
+	public void debug() throws Exception
+	{
+		String[] keys = prefs.keys();
+		Arrays.sort(keys);
+		ArrayList<String> settings = new ArrayList<String>();
+		for (String k : keys)
+		{
+			settings.add(k + " = " + prefs.get(k, null));
+		}
+		Debug.info("settings bridge", settings);
+	}
 	
 	public void setInternalipaddress(String internalipaddress)
 	{
@@ -126,24 +125,25 @@ class SettingsBridge // bridge settings
 
 class SettingsLight // light settings
 {
-	public Preferences prefs = Preferences.userRoot().node("/hueimmersive/lights");
+	private Preferences prefs = Preferences.userRoot().node("/hueimmersive/lights");
 	
 	private int nexAlg = 0;
 	private int maxAlg = ImmersiveProcess.algorithms;
 	
-	public void checkSettings(int LightID) throws Exception // setup default light settings if it doesn't have
+	public void checkSettings(String uniqueid) throws Exception // setup default light settings if it doesn't have
 	{
-		if (prefs.get(LightID + " active", null) == null)
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		if (prefs.get("active", null) == null)
 		{
-			setActive(LightID, true);
+			lprefs.putBoolean("active", true);
 		}
-		if (prefs.get(LightID + " bri", null) == null)
+		if (prefs.get("bri", null) == null)
 		{
-			setBrightness(LightID, 100);
+			lprefs.putInt("bri", 100);
 		}
-		if (prefs.get(LightID + " alg", null) == null)
+		if (prefs.get("alg", null) == null)
 		{
-			setAlgorithm(LightID, nexAlg);
+			lprefs.putInt("alg", nexAlg);
 			nexAlg++;
 			if (nexAlg > maxAlg)
 			{
@@ -152,29 +152,51 @@ class SettingsLight // light settings
 		}
 	}
 	
-	public void setBrightness(int LightID, int bri)
+	public void debug() throws Exception
 	{
-		prefs.putInt(LightID + " bri", bri);
-	}
-	public void setActive(int LightID, boolean active)
-	{
-		prefs.putBoolean(LightID + " active", active);
-	}
-	public void setAlgorithm(int LightID, int alg)
-	{
-		prefs.putInt(LightID + " alg", alg);
+		ArrayList<String> settings = new ArrayList<String>();
+		for (String node : prefs.childrenNames())
+		{	
+			settings.add(node + "");
+			String[] keys = prefs.node(node).keys();
+			Arrays.sort(keys);
+			for (String s : keys)
+			{
+				settings.add("  " + s + " = " + prefs.node(node).get(s, null));
+			}
+		}
+		Debug.info("settings lights", settings);
 	}
 	
-	public boolean getActive(int LightID)
+	public void setBrightness(String uniqueid, int bri)
 	{
-		return prefs.getBoolean(LightID + " active", true);
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		lprefs.putInt("bri", bri);
 	}
-	public int getAlgorithm(int LightID)
+	public void setActive(String uniqueid, boolean active)
 	{
-		return prefs.getInt(LightID + " alg", -1);
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		lprefs.putBoolean("active", active);
 	}
-	public int getBrightness(int LightID)
+	public void setAlgorithm(String uniqueid, int alg)
 	{
-		return prefs.getInt(LightID + " bri", -1);
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		lprefs.putInt("alg", alg);
+	}
+	
+	public boolean getActive(String uniqueid)
+	{
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		return lprefs.getBoolean("active", true);
+	}
+	public int getAlgorithm(String uniqueid)
+	{
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		return lprefs.getInt("alg", -1);
+	}
+	public int getBrightness(String uniqueid)
+	{
+		Preferences lprefs = Preferences.userRoot().node(prefs.absolutePath() + "/" + uniqueid);
+		return lprefs.getInt("bri", -1);
 	}
 }

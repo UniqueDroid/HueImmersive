@@ -295,13 +295,13 @@ public class ImmersiveProcess
 	{
 		for (HLight light : HBridge.lights)
 		{
-			int id = light.id;
-			boolean active = Settings.Light.getActive(id);
-			int alg = Settings.Light.getAlgorithm(id);
+			String uniqueid = light.uniqueid;
+			boolean active = Settings.Light.getActive(uniqueid);
+			int alg = Settings.Light.getAlgorithm(uniqueid);
 			
 			if(active == true)
 			{
-				Main.hueControl.setLight(id, extrColor[alg]);
+				Main.hueControl.setLight(light, extrColor[alg]);
 			}
 		}
 	}

@@ -44,11 +44,13 @@ public class Main
 				"os: " + System.getProperty("os.name"),
 				"java version: " + System.getProperty("java.version"));
 		
+		Settings.debug();
+		Settings.Bridge.debug();
+		Settings.Light.debug();
+		
 		Debug.info(null, "hue immersive started");
 		
 		checkForUpdate();
-		
-		Settings.debug();
 		
 		ui = new UserInterface();
 		hueControl = new Control();

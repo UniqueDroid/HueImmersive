@@ -209,7 +209,7 @@ public class OptionInterface
 						return values[index];
 					}
 				});
-				list_Algorithms.setSelectedIndex(Settings.Light.getAlgorithm(light.id));
+				list_Algorithms.setSelectedIndex(Settings.Light.getAlgorithm(light.uniqueid));
 				list_Algorithms.addMouseMotionListener(new MouseMotionAdapter() {
 					@Override
 					public void mouseMoved(MouseEvent arg0) 
@@ -246,7 +246,7 @@ public class OptionInterface
 				slider_Brightness.setMinorTickSpacing(5);
 				slider_Brightness.setMinimum(10);
 				slider_Brightness.setMaximum(100);
-				slider_Brightness.setValue(Settings.Light.getBrightness(light.id));			
+				slider_Brightness.setValue(Settings.Light.getBrightness(light.uniqueid));			
 				panel_Brightness.add(slider_Brightness, "1, 1, center, center");
 				
 				final JLabel label_Brightness = new JLabel("100%");
@@ -261,7 +261,7 @@ public class OptionInterface
 				});
 				
 				final JCheckBox checkbox_Active = new JCheckBox();
-				checkbox_Active.setSelected(Settings.Light.getActive(light.id));
+				checkbox_Active.setSelected(Settings.Light.getActive(light.uniqueid));
 				checkbox_Active.setToolTipText("allow the program to change this lights color and brightness");
 				if (checkbox_Active.isSelected() == false)
 				{
@@ -330,14 +330,14 @@ public class OptionInterface
 			JPanel panel_Light = (JPanel) panel_Lights.getComponent(HBridge.lights.indexOf(light));
 			
 			JCheckBox checkbox_Active = (JCheckBox) panel_Light.getComponent(0);
-			Settings.Light.setActive(light.id, checkbox_Active.isSelected());
+			Settings.Light.setActive(light.uniqueid, checkbox_Active.isSelected());
 			
 			JList list_Algorithms = (JList) panel_Light.getComponent(2);
-			Settings.Light.setAlgorithm(light.id, list_Algorithms.getSelectedIndex());
+			Settings.Light.setAlgorithm(light.uniqueid, list_Algorithms.getSelectedIndex());
 			
 			JPanel panel_Brightness = (JPanel) panel_Light.getComponent(3);
 			JSlider slider_Brightness = (JSlider) panel_Brightness.getComponent(0);
-			Settings.Light.setBrightness(light.id, slider_Brightness.getValue());
+			Settings.Light.setBrightness(light.uniqueid, slider_Brightness.getValue());
 		}
 		
 		try 
