@@ -51,9 +51,9 @@ public class UserInterface
 {
 	private JFrame frame;
 	private JLabel labelConnect;
-	private JButton button_Stop;
-	private JButton button_Start;
-	private JButton button_Once;
+	public JButton button_Stop;
+	public JButton button_Start;
+	public JButton button_Once;
 	private JComboBox checkbox_Format;
 	public JCheckBox checkbox_ShowColorGrid;
 	public JSlider slider_Brightness;
@@ -225,8 +225,6 @@ public class UserInterface
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					button_On.setEnabled(false);
-					button_Off.setEnabled(true);
 					Main.hueControl.turnAllLightsOn();
 				} catch (Exception e)
 				{
@@ -244,8 +242,6 @@ public class UserInterface
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					button_On.setEnabled(true);
-					button_Off.setEnabled(false);
 					Main.hueControl.turnAllLightsOff();
 				} catch (Exception e)
 				{
@@ -421,9 +417,6 @@ public class UserInterface
 				try
 				{
 					Main.hueControl.stopImmersiveProcess();
-					button_Stop.setEnabled(false);
-					button_Start.setEnabled(true);
-					button_Once.setEnabled(true);
 				} 
 				catch (Exception e)
 				{
@@ -442,9 +435,6 @@ public class UserInterface
 				try
 				{
 					Main.hueControl.startImmersiveProcess();
-					button_Stop.setEnabled(true);
-					button_Start.setEnabled(false);
-					button_Once.setEnabled(false);
 				} 
 				catch (Exception e)
 				{
@@ -462,9 +452,6 @@ public class UserInterface
 				try
 				{
 					Main.hueControl.onceImmersiveProcess();
-					button_Stop.setEnabled(false);
-					button_Start.setEnabled(true);
-					button_Once.setEnabled(true);
 				} 
 				catch (Exception e)
 				{

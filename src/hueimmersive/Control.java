@@ -13,6 +13,22 @@ public class Control
 	public Control() throws Exception
 	{
 		HBridge.setup();
+		
+		for(String arg : Main.arguments)
+		{
+			if (arg.equals("force-on"))
+			{
+				turnAllLightsOn();
+			}
+			else if (arg.equals("force-off"))
+			{
+				turnAllLightsOff();
+			}
+			else if (arg.equals("force-start"))
+			{
+				startImmersiveProcess();
+			}
+		}
 	}
 	
 	public void setLight(int LightID, Color color) throws Exception // calculate color and send it to light
@@ -53,6 +69,10 @@ public class Control
 		Main.ui.button_Off.setEnabled(false);
 		Main.ui.button_On.setEnabled(false);
 		
+		Main.ui.button_Stop.setEnabled(true);
+		Main.ui.button_Start.setEnabled(false);
+		Main.ui.button_Once.setEnabled(false);
+		
 		for(HLight light : HBridge.lights)
 		{
 			light.storeLightColor();
@@ -84,6 +104,10 @@ public class Control
 		
 		Main.ui.setupOnOffButton();
 		
+		Main.ui.button_Stop.setEnabled(false);
+		Main.ui.button_Start.setEnabled(true);
+		Main.ui.button_Once.setEnabled(true);
+		
 		Thread.sleep(250);
 		ImmersiveProcess.setStandbyOutput();
 		
@@ -99,6 +123,10 @@ public class Control
 	
 	public void onceImmersiveProcess() throws Exception
 	{
+		Main.ui.button_Stop.setEnabled(false);
+		Main.ui.button_Start.setEnabled(true);
+		Main.ui.button_Once.setEnabled(true);
+		
 		ImmersiveProcess.execute();
 	}
 	
@@ -111,6 +139,7 @@ public class Control
 				light.turnOn();
 			}
 		}
+		Main.ui.setupOnOffButton();
 	}
 
 	public void turnAllLightsOff() throws Exception
@@ -122,6 +151,7 @@ public class Control
 				light.turnOff();
 			}
 		}
+		Main.ui.setupOnOffButton();
 	}
 
 }

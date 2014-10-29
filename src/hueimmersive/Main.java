@@ -10,13 +10,16 @@ public class Main
 	public static UserInterface ui;
 	public static Control hueControl;
 	
-	public static final String version = "0.4.4";
-	public static final int build = 16;
+	public static final String version = "0.4.5";
+	public static final int build = 17;
 	
 	public static boolean updateAvailable;
 	
+	public static String[] arguments;
+	
 	public static void main(String[] args) throws Exception
-	{		
+	{
+		arguments = args;
 		for (String arg : args) // check program arguments
 		{
 			if (arg.equals("debug"))
@@ -32,6 +35,8 @@ public class Main
 				Settings.reset(true);
 			}
 		}
+		
+		Debug.info("program arguments", (Object[])args);
 		
 		Debug.info("program parameters",
 				"version: " + version,
