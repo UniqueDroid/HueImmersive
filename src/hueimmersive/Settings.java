@@ -80,7 +80,12 @@ public class Settings
 	public static String[] getArguments()
 	{
 		String args = prefs.get("arguments", null);
-		String[] arrArgs = args.split(",");
+		
+		String[] arrArgs = {};
+		if (args != null)
+		{
+			arrArgs = args.split(",");
+		}
 		
 		return arrArgs;
 	}
