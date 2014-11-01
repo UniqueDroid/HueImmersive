@@ -14,20 +14,17 @@ public class Control
 	{
 		HBridge.setup();
 		
-		for(String arg : Main.arguments)
+		if (Main.arguments.contains("force-on"))
 		{
-			if (arg.equals("force-on"))
-			{
-				turnAllLightsOn();
-			}
-			else if (arg.equals("force-off"))
-			{
-				turnAllLightsOff();
-			}
-			else if (arg.equals("force-start"))
-			{
-				startImmersiveProcess();
-			}
+			turnAllLightsOn();
+		}
+		if (Main.arguments.contains("force-off"))
+		{
+			turnAllLightsOff();
+		}
+		if (Main.arguments.contains("force-start"))
+		{
+			startImmersiveProcess();
 		}
 	}
 	

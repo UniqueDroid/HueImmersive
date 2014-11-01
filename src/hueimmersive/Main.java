@@ -3,6 +3,8 @@ package hueimmersive;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Main
@@ -15,28 +17,28 @@ public class Main
 	
 	public static boolean updateAvailable;
 	
-	public static String[] arguments;
+	public static ArrayList<String> arguments = new ArrayList<String>();
 	
 	public static void main(String[] args) throws Exception
 	{
-		arguments = args;
-		for (String arg : args) // check program arguments
+		arguments.addAll(Arrays.asList(args));
+		arguments.addAll(Arrays.asList(Settings.getArguments()));
+		
+		// check program arguments
+		if(arguments.contains("debug"))
 		{
-			if (arg.equals("debug"))
-			{
-				Debug.activateDebugging();
-			}
-			else if(arg.equals("log"))
-			{
-				Debug.activateLogging();
-			}
-			else if (arg.equals("reset"))
-			{
-				Settings.reset(true);
-			}
+			Debug.activateDebugging();
+		}
+		if(arguments.contains("log"))
+		{
+			Debug.activateLogging();
+		}
+		if (arguments.contains("reset"))
+		{
+			Settings.reset(true);
 		}
 		
-		Debug.info("program arguments", (Object[])args);
+		Debug.info("program arguments", (Object[])arguments.toArray());
 		
 		Debug.info("program parameters",
 				"version: " + version,

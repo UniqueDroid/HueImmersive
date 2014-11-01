@@ -77,6 +77,14 @@ public class Settings
 		}
 	}
 	
+	public static String[] getArguments()
+	{
+		String args = prefs.get("arguments", null);
+		String[] arrArgs = args.split(",");
+		
+		return arrArgs;
+	}
+	
 	public static int getInteger(String key)
 	{
 		return prefs.getInt(key, 0);
