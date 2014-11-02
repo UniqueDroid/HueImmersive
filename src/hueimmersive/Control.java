@@ -14,11 +14,11 @@ public class Control
 	{
 		HBridge.setup();
 		
-		if (Main.arguments.contains("force-on"))
+		if (Main.arguments.contains("force-on") && !Main.arguments.contains("force-off"))
 		{
 			turnAllLightsOn();
 		}
-		if (Main.arguments.contains("force-off"))
+		if (Main.arguments.contains("force-off") && !Main.arguments.contains("force-on"))
 		{
 			turnAllLightsOff();
 		}

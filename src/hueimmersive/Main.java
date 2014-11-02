@@ -22,7 +22,7 @@ public class Main
 	public static void main(String[] args) throws Exception
 	{
 		arguments.addAll(Arrays.asList(args));
-		arguments.addAll(Arrays.asList(Settings.getArguments()));
+		arguments.addAll(Settings.getArguments());
 		
 		// check program arguments
 		if(arguments.contains("debug"))

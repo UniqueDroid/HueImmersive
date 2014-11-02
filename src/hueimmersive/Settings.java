@@ -77,17 +77,35 @@ public class Settings
 		}
 	}
 	
-	public static String[] getArguments()
+	public static ArrayList<String> getArguments()
 	{
 		String args = prefs.get("arguments", null);
 		
-		String[] arrArgs = {};
+		ArrayList<String> arrArgs = new ArrayList<String>();
 		if (args != null)
 		{
-			arrArgs = args.split(",");
+			arrArgs.addAll(Arrays.asList(args.split(",")));
 		}
 		
 		return arrArgs;
+	}
+	
+	public static void setArguments(ArrayList<String> args)
+	{
+		if (args.size() != 0)
+		{
+			String arguments = "";
+			for (String arg : args)
+			{
+				arguments += "," + arg;
+			}
+			arguments = arguments.replaceFirst(",", "");
+			prefs.put("arguments", arguments);
+		}
+		else
+		{
+			prefs.remove("arguments");
+		}
 	}
 	
 	public static int getInteger(String key)
