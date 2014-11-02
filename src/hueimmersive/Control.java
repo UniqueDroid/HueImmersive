@@ -9,6 +9,7 @@ public class Control
 {
 	private Timer captureLoop;
 	private double autoOffBri = 0.0;
+	public static boolean immersiveProcessIsActive = false;
 	
 	public Control() throws Exception
 	{
@@ -70,6 +71,8 @@ public class Control
 		Main.ui.button_Start.setEnabled(false);
 		Main.ui.button_Once.setEnabled(false);
 		
+		immersiveProcessIsActive = true;
+		
 		for(HLight light : HBridge.lights)
 		{
 			light.storeLightColor();
@@ -98,6 +101,8 @@ public class Control
 	{
 		captureLoop.cancel();
 		captureLoop.purge();
+		
+		immersiveProcessIsActive = false;
 		
 		Main.ui.setupOnOffButton();
 		

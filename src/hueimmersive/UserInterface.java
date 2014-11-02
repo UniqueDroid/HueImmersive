@@ -597,35 +597,38 @@ public class UserInterface
 	
 	public void setupOnOffButton() throws Exception // enable/disable on/off Buttons
 	{
-		boolean lightOn = false;
-		boolean lightOff = false;
-		
-		for(HLight light : HBridge.lights)
+		if (!Main.hueControl.immersiveProcessIsActive)
 		{
-			if (light.isOn() && Settings.Light.getActive(light.uniqueid))
+			boolean lightOn = false;
+			boolean lightOff = false;
+			
+			for(HLight light : HBridge.lights)
 			{
-				lightOn = true;
+				if (light.isOn() && Settings.Light.getActive(light.uniqueid))
+				{
+					lightOn = true;
+				}
+				else if (!light.isOn() && Settings.Light.getActive(light.uniqueid))
+				{
+					lightOff = true;
+				}
 			}
-			else if (!light.isOn() && Settings.Light.getActive(light.uniqueid))
+			
+			if (lightOn && lightOff)
 			{
-				lightOff = true;
+				button_On.setEnabled(true);
+				button_Off.setEnabled(true);
 			}
-		}
-		
-		if (lightOn && lightOff)
-		{
-			button_On.setEnabled(true);
-			button_Off.setEnabled(true);
-		}
-		else if (lightOn)
-		{
-			button_On.setEnabled(false);
-			button_Off.setEnabled(true);
-		}
-		else if (lightOff)
-		{
-			button_On.setEnabled(true);
-			button_Off.setEnabled(false);
+			else if (lightOn)
+			{
+				button_On.setEnabled(false);
+				button_Off.setEnabled(true);
+			}
+			else if (lightOff)
+			{
+				button_On.setEnabled(true);
+				button_Off.setEnabled(false);
+			}
 		}
 	}
 }
