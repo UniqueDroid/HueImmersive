@@ -84,6 +84,11 @@ public class Debug
 			if (header != null && header != "")
 			{
 				dText += "- - - - - " + header.toUpperCase() + " - - - - -\n";
+				
+				if (msg.length == 0)
+				{
+					dText += "\n";
+				}
 			}
 			
 			for (int i = 0; i < msg.length; i++)
@@ -111,6 +116,11 @@ public class Debug
 			if (header != null && header != "")
 			{
 				lText += header.toUpperCase();
+				
+				if (msg.length == 0)
+				{
+					lText += "\n";
+				}
 			}
 			
 			for (int i = 0; i < msg.length; i++)
